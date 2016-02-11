@@ -1,0 +1,20 @@
+[
+	{
+		"text": "Eat breakfast",
+		"done": false
+	},
+
+	{
+		"text": "Eat Lunch",
+		"done": false
+	},
+	{
+		"text": "Eat Snack",
+		"done": false
+	},
+	{
+		"text": "Eat dinner",
+		"done": false
+	}
+
+]
