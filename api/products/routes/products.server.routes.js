@@ -11,5 +11,9 @@
 
 	router.post("/", products.create);
 
+	router.put("/:_id", products.update);
+
+	router.delete("/:_id", products.remove);
+
 	module.exports = router;
 })();

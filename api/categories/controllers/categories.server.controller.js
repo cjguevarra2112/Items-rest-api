@@ -37,15 +37,16 @@
 		Category.find({_id: categoryId},(err, category) => {
 			if (err) return next(err);
 
-			if (!category) {
+			if (category.length === 0) {
 				let err = new Error("Category not found.");
+				err.status = 404;
+				next(err);
 			}
 
 			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({
 				category: category
 			}, null, 4));
-
 		});
     }
 
