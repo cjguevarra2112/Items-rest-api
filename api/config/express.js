@@ -28,11 +28,28 @@
 		// IV. Configure static directory
 		app.use(express.static("./public"));
 
-		// V. Register Modules
-
+		// VI. Register Modules
 		// Products module
 		app.use("/products", require("../products/routes/products.server.routes"));
 		app.use("/categories", require("../categories/routes/categories.server.routes"));
+
+		// VIi. Error middleware handlers
+		// 404 Error
+		app.use((req, res, next) => {
+			let err = new Error("Route Not Found.");
+			err.status = 404;
+			next(err);
+		});
+
+		// main error handler (500 status code by default)
+		app.use((err, req, res, next) => {
+			res.status(err.status || 500);
+			res.setHeader("Content-Type", "application/json");
+			res.end(JSON.stringify({
+				message: err.message,
+				error: err
+			}, null, 4));
+		});
 
 		return app;
 	};

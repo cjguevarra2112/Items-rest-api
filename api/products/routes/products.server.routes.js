@@ -9,5 +9,7 @@
 
 	router.get("/:_id", products.get);
 
+	router.post("/", products.create);
+
 	module.exports = router;
 })();

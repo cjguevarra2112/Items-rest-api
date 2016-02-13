@@ -7,6 +7,14 @@
 		name: String,
 		price: Number,
 		stock: Number,
-		category: String
+		description: String,
+		category: String,
+		createdAt: {
+			type: Date,
+			default: Date.now
+		}
+
 	});
+
+	mongoose.model("Product", ProductSchema);
 })();
