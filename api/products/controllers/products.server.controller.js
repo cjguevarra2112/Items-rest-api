@@ -20,7 +20,6 @@
 	exports.list = (req, res, next) => {
 		Product.find({}, (err, products) => {
 			if (err) return console.error(err);
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify(products, null, 4));
 		});
 	};
@@ -36,7 +35,6 @@
 
 		Product.find({_id: productId}, (err, product) => {
 			if (err) return console.error(err);
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify(product, null, 4));
 		});
 	};
@@ -63,10 +61,8 @@
 		var productId = toObjectId(req.params._id);
 		var reqBody = req.body;
 
-		Product.findbyIdAndUpdate(productId, reqBody, (err, product) => {
+		Product.findByIdAndUpdate(productId, reqBody, (err, product) => {
 			if (err) return next(err);
-
-			res.setHeader("Content-Type", "appplication/json");
 			res.end(JSON.stringify({product: reqBody}, null, 4));
 		});
 	}
@@ -81,7 +77,6 @@
 		var productId = toObjectId(req.params._id);
 		Product.remove({_id: productId}, (err, result) => {
 			if (err) return next(err);
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({removed: true}));
 		});
 	}

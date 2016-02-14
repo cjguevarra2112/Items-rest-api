@@ -15,13 +15,10 @@
 		return require("mongoose").Types.ObjectId(str);
 	};
 
-
     // Categories middleware
     exports.list = (req, res, next) => {
         Category.find({}, (err, categories) => {
 			if (err) return next(err);
-
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify(categories, null, 4));
 		});
     }
@@ -32,7 +29,6 @@
 			err.status = 400;
 			next(err);
 		}
-
 		var categoryId = toObjectId(req.params._id);
 		Category.find({_id: categoryId},(err, category) => {
 			if (err) return next(err);
@@ -42,8 +38,6 @@
 				err.status = 404;
 				next(err);
 			}
-
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({
 				category: category
 			}, null, 4));
@@ -56,8 +50,6 @@
 
 		newCategory.save(newCategory, (err) => {
 			if (err) return next(err);
-
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({
 				newCategory: newCategory
 			}, null, 4));
@@ -76,7 +68,6 @@
 
 		Category.findByIdAndUpdate(categoryId, reqBody, (err, category) => {
 			if (err) return next(err);
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({category: reqBody.name}, null, 4));
 		});
 	}
@@ -90,8 +81,6 @@
 		var categoryId = toObjectId(req.params._id);
 		Category.remove({_id: categoryId}, (err, result) => {
 			if (err) return next(err);
-
-			res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify({removed: true}, null, 4));
 		});
 	}
