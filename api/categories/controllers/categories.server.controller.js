@@ -62,7 +62,6 @@
 			err.status = 400;
 			next(err);
 		}
-
 		var categoryId = toObjectId(req.params._id);
 		var reqBody = req.body;
 
@@ -84,7 +83,5 @@
 			res.end(JSON.stringify({removed: true}, null, 4));
 		});
 	}
-
-
 
 })();

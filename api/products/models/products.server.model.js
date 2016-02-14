@@ -13,8 +13,6 @@
 			type: Date,
 			default: Date.now
 		}
-
 	});
-
 	mongoose.model("Product", ProductSchema);
 })();
