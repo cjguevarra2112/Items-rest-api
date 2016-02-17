@@ -10,6 +10,7 @@
 		// Require models here
 		require("../products/models/products.server.model");
 		require("../categories/models/categories.server.model");
+		require("../users/models/users.server.model");
 
 		return db;
 	}

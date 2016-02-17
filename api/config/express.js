@@ -38,13 +38,16 @@
 		});
 
 		// Products module
-		app.use("/products", require("../products/routes/products.server.routes"));
+		app.use("/api/products", require("../products/routes/products.server.routes"));
 		// Categories module
-		app.use("/categories", require("../categories/routes/categories.server.routes"));
+		app.use("/api/categories", require("../categories/routes/categories.server.routes"));
+		// Users module
+		app.use("/api/users", require("../users/routes/users.server.routes"));
+
 
 		// VII. Error middleware handlers
 
-		// 404 Error
+		// 404 Error (First error that might happen by default)
 		app.use((req, res, next) => {
 			let err = new Error("Route Not Found.");
 			err.status = 404;

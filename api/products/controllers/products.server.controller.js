@@ -20,7 +20,6 @@
 
 	// Returns a specific product
 	exports.get = (req, res, next) => {
-
 		var productId = hf.toObjectId(req.params._id);
 
 		Product.find({_id: productId}, (err, product) => {
@@ -31,7 +30,6 @@
 				err.status = 404;
 				next(err);
 			}
-
 			res.end(JSON.stringify(product, null, 4));
 		});
 	};
@@ -49,7 +47,6 @@
 
 	// Updates an existsing product
 	exports.update = (req, res, next) => {
-
 		var productId = hf.toObjectId(req.params._id);
 		var reqBody = req.body;
 

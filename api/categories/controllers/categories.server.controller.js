@@ -1,35 +1,41 @@
 (function() {
     "use strict";
 
+	/**
+		CATEGORIES MODULE
+
+		Middleware functions for category modules
+
+	**/
+
 	var Category = require("mongoose").model("Category");
+	var Products = require("mongoose").model("Product");
 
-	/** Some helper functions **/
+	// helper functions
+	var hf = require("../../share/helper_functions");
 
-	// Returns true if string is a valid mongodb ObjectId
-	var isObjectId = (str) => {
-		return require("mongoose").Types.ObjectId.isValid(str);
-	};
+    /** Categories middleware **/
 
-	// Returns a mongodb ObjectId based on a string
-	var toObjectId = (str) => {
-		return require("mongoose").Types.ObjectId(str);
-	};
-
-    // Categories middleware
-    exports.list = (req, res, next) => {
+	// Retrieves list of categories
+	exports.list = (req, res, next) => {
         Category.find({}, (err, categories) => {
 			if (err) return next(err);
 			res.end(JSON.stringify(categories, null, 4));
 		});
     }
 
+	// Retrieves list of products of a category
+	exports.products = (req, res, next) => {
+		var categoryId = hf.toObjectId(req.params._id);
+		Products.find({category: categoryId}, (err, products) => {
+			if (err) return next(err);
+			res.end(JSON.stringify(products, null, 4));
+		});
+	}
+
+	// Retrives a specific category
     exports.get = (req, res, next) => {
-        if (!isObjectId(req.params._id)) {
-			let err = new Error("Got an invalid object Id");
-			err.status = 400;
-			next(err);
-		}
-		var categoryId = toObjectId(req.params._id);
+		var categoryId = hf.toObjectId(req.params._id);
 		Category.find({_id: categoryId},(err, category) => {
 			if (err) return next(err);
 
@@ -39,7 +45,7 @@
 				next(err);
 			}
 			res.end(JSON.stringify({
-				category: category
+				category: category.pop()
 			}, null, 4));
 		});
     }
@@ -57,12 +63,7 @@
 	}
 
 	exports.update = (req, res, next) => {
-		if (!isObjectId(req.params._id)) {
-			let err = new Error("Got an invalid object Id");
-			err.status = 400;
-			next(err);
-		}
-		var categoryId = toObjectId(req.params._id);
+		var categoryId = hf.toObjectId(req.params._id);
 		var reqBody = req.body;
 
 		Category.findByIdAndUpdate(categoryId, reqBody, (err, category) => {
@@ -72,12 +73,7 @@
 	}
 
 	exports.remove = (req, res, next) => {
-		if (!isObjectId(req.params._id)) {
-			let err = new Error("Got an invalid object Id");
-			err.status = 400;
-			next(err);
-		}
-		var categoryId = toObjectId(req.params._id);
+		var categoryId = hf.toObjectId(req.params._id);
 		Category.remove({_id: categoryId}, (err, result) => {
 			if (err) return next(err);
 			res.end(JSON.stringify({removed: true}, null, 4));

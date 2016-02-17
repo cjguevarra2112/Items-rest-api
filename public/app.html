@@ -1,5 +1,10 @@
-<div class="container">
+<div class="container" ng-controller="MainController as mainCtrl">
+	<h1>Hello World!</h1>
+	<p>{{ mainCtrl.appName }}</p>
 
-
-
+	<ul>
+		<li ng-repeat="category in mainCtrl.categories">
+			<a href="/categories/{{ category._id }}/products">{{ category.name }}</a>
+		</li>
+	</ul>
 </div>

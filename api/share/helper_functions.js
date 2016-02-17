@@ -10,4 +10,9 @@
 		return mongoose.Types.ObjectId(str);
 	};
 
+	// Returns a 4 tabbed string-ified JSON string
+	exports.toJSON = (jsonObj) => {
+		return JSON.stringify(jsonObj, null, 4);
+	};
+
 })();
